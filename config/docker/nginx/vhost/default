@@ -1,0 +1,22 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html/public/;
+    index index.php index.html index.htm index.nginx-debian.html;
+
+    #server_name domínio_do_servidor_ou_IP;
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+	 }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
